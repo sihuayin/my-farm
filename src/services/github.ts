@@ -1,5 +1,6 @@
 import type { GitHubIssue, GitHubComment, GitHubLabel } from '../types/issue';
 import { ISSUE_TITLE_PREFIX } from '../types/issue';
+import { getStoredToken } from './auth';
 
 // GitHub API 配置
 // 可以通过环境变量配置，也可以在此设置默认值
@@ -9,11 +10,20 @@ const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN || '';
 
 const BASE_URL = 'https://api.github.com';
 
+// 认证错误类
+export class AuthRequiredError extends Error {
+  constructor() {
+    super('Requires authentication');
+    this.name = 'AuthRequiredError';
+  }
+}
+
 class GitHubAPI {
   private token: string;
 
   constructor(token?: string) {
-    this.token = token || GITHUB_TOKEN;
+    // 优先使用传入的 token，其次使用存储的 token，最后使用环境变量
+    this.token = token || getStoredToken() || GITHUB_TOKEN;
   }
 
   private async request<T>(
@@ -32,6 +42,10 @@ class GitHubAPI {
       headers,
     });
 
+    if (response.status === 401) {
+      throw new AuthRequiredError();
+    }
+
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
       throw new Error(
@@ -40,6 +54,16 @@ class GitHubAPI {
     }
 
     return response.json();
+  }
+
+  // 获取当前 token 是否有认证
+  hasAuth(): boolean {
+    return !!this.token;
+  }
+
+  // 更新 token
+  setToken(token: string): void {
+    this.token = token;
   }
 
   // 获取仓库的 Labels
