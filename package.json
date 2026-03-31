@@ -1,7 +1,7 @@
 {
   "name": "farm",
   "private": true,
-  "version": "0.0.0",
+  "homepage": "https://sihuayin.github.io/my-farm",
   "type": "module",
   "packageManager": "yarn@4.12.0",
   "scripts": {
