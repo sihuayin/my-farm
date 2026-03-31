@@ -4,14 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import CropCard from '../components/CropCard';
 import { crops } from '../data/crops';
 import type { Category } from '../types/crop';
-
-const categories: { label: string; value: Category | 'all' }[] = [
-  { label: '全部', value: 'all' },
-  { label: '蔬菜', value: 'vegetable' },
-  { label: '粮食', value: 'grain' },
-  { label: '水果', value: 'fruit' },
-  { label: '花卉', value: 'flower' },
-];
+import { categories } from '../constants/categories';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -102,5 +95,3 @@ export default function Home() {
     </div>
   );
 }
-
-export { categories };

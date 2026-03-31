@@ -6,6 +6,7 @@ import GrowthTimeline from '../components/GrowthTimeline';
 import CareGuide from '../components/CareGuide';
 import HabitInfo from '../components/HabitInfo';
 import ImageModal from '../components/ImageModal';
+import CropComments from '../components/CropComments';
 
 export default function CropDetail() {
   const { id } = useParams();
@@ -70,6 +71,8 @@ export default function CropDetail() {
             </ul>
           </section>
         )}
+
+        <CropComments cropName={crop.name} cropId={crop.id} />
       </div>
 
       {modalImage && (

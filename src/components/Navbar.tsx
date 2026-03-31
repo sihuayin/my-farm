@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { Leaf } from 'lucide-react';
 import type { Category } from '../types/crop';
-import { categories } from '../pages/Home';
+import { categories } from '../constants/categories';
 
 export default function Navbar() {
   const [searchParams, setSearchParams] = useSearchParams();
