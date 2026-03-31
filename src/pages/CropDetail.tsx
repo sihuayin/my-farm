@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Lightbulb } from 'lucide-react';
 import { crops, categoryLabels } from '../data/crops';
 import GrowthTimeline from '../components/GrowthTimeline';
 import CareGuide from '../components/CareGuide';
 import HabitInfo from '../components/HabitInfo';
+import ImageModal from '../components/ImageModal';
 
 export default function CropDetail() {
   const { id } = useParams();
   const crop = crops.find((c) => c.id === id);
+  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
 
   if (!crop) {
     return (
@@ -20,10 +23,23 @@ export default function CropDetail() {
     );
   }
 
+  const handleImageClick = (src: string, alt: string) => {
+    setModalImage({ src, alt });
+  };
+
+  const closeModal = () => {
+    setModalImage(null);
+  };
+
   return (
     <div className="crop-detail">
       <div className="crop-hero">
-        <img src={crop.coverImage} alt={crop.name} className="crop-hero-image" />
+        <img
+          src={crop.coverImage}
+          alt={crop.name}
+          className="crop-hero-image"
+          onClick={() => handleImageClick(crop.coverImage, crop.name)}
+        />
         <div className="crop-hero-overlay">
           <Link to="/" className="back-link">
             <ArrowLeft size={18} /> 返回
@@ -40,7 +56,7 @@ export default function CropDetail() {
       <div className="crop-body">
         <HabitInfo habits={crop.habits} />
         <CareGuide care={crop.care} />
-        <GrowthTimeline stages={crop.stages} />
+        <GrowthTimeline stages={crop.stages} onImageClick={handleImageClick} />
 
         {crop.tips.length > 0 && (
           <section className="tips-section">
@@ -55,6 +71,15 @@ export default function CropDetail() {
           </section>
         )}
       </div>
+
+      {modalImage && (
+        <ImageModal
+          src={modalImage.src}
+          alt={modalImage.alt}
+          isOpen={!!modalImage}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 }

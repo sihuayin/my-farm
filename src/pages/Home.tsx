@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import CropCard from '../components/CropCard';
 import { crops } from '../data/crops';
 import type { Category } from '../types/crop';
@@ -14,14 +15,26 @@ const categories: { label: string; value: Category | 'all' }[] = [
 
 export default function Home() {
   const [query, setQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState<Category | 'all'>('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeCategory = (searchParams.get('category') as Category | 'all') || 'all';
 
   useEffect(() => {
-    const navBtns = document.querySelectorAll<HTMLButtonElement>('.nav-link');
-    navBtns.forEach((btn) => {
-      btn.classList.toggle('active', btn.dataset.category === activeCategory);
+    // Sync active state for both nav-link and filter-btn
+    const category = searchParams.get('category') || 'all';
+    document.querySelectorAll('.nav-link, .filter-btn').forEach((btn) => {
+      const btnCategory = btn.getAttribute('data-category');
+      btn.classList.toggle('active', btnCategory === category);
     });
-  }, [activeCategory]);
+  }, [searchParams]);
+
+  const handleCategoryClick = (category: Category | 'all') => {
+    if (category === 'all') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', category);
+    }
+    setSearchParams(searchParams);
+  };
 
   const filtered = crops.filter((crop) => {
     const matchCategory = activeCategory === 'all' || crop.category === activeCategory;
@@ -31,11 +44,6 @@ export default function Home() {
       crop.scientificName.toLowerCase().includes(query.toLowerCase());
     return matchCategory && matchQuery;
   });
-
-  const handleNavClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const cat = e.currentTarget.dataset.category as Category | 'all';
-    setActiveCategory(cat);
-  };
 
   return (
     <div className="home">
@@ -50,6 +58,22 @@ export default function Home() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
+          {query && (
+            <button
+              onClick={() => setQuery('')}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                color: 'var(--text-light)',
+              }}
+            >
+              <X size={16} />
+            </button>
+          )}
         </div>
       </section>
 
@@ -58,7 +82,8 @@ export default function Home() {
           <button
             key={cat.value}
             className={`filter-btn ${activeCategory === cat.value ? 'active' : ''}`}
-            onClick={handleNavClick}
+            data-category={cat.value}
+            onClick={() => handleCategoryClick(cat.value)}
           >
             {cat.label}
           </button>
@@ -77,3 +102,5 @@ export default function Home() {
     </div>
   );
 }
+
+export { categories };

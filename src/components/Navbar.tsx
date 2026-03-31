@@ -1,17 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Leaf } from 'lucide-react';
-
-const categories = [
-  { label: '全部', value: 'all' },
-  { label: '蔬菜', value: 'vegetable' },
-  { label: '粮食', value: 'grain' },
-  { label: '水果', value: 'fruit' },
-  { label: '花卉', value: 'flower' },
-];
+import type { Category } from '../types/crop';
+import { categories } from '../pages/Home';
 
 export default function Navbar() {
-  const location = useLocation();
-  const isHome = location.pathname === '/';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeCategory = searchParams.get('category') || 'all';
+
+  const handleCategoryClick = (category: Category | 'all') => {
+    if (category === 'all') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', category);
+    }
+    setSearchParams(searchParams);
+  };
 
   return (
     <header className="navbar">
@@ -20,15 +23,18 @@ export default function Navbar() {
           <Leaf size={24} />
           <span>Farm Guide</span>
         </Link>
-        {isHome && (
-          <nav className="navbar-nav">
-            {categories.map((cat) => (
-              <button key={cat.value} className="nav-link" data-category={cat.value}>
-                {cat.label}
-              </button>
-            ))}
-          </nav>
-        )}
+        <nav className="navbar-nav">
+          {categories.map((cat) => (
+            <button
+              key={cat.value}
+              className={`nav-link ${activeCategory === cat.value ? 'active' : ''}`}
+              data-category={cat.value}
+              onClick={() => handleCategoryClick(cat.value)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </nav>
       </div>
     </header>
   );

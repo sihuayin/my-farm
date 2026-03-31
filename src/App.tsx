@@ -5,7 +5,7 @@ import CropDetail from './pages/CropDetail';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/my-farm">
       <Navbar />
       <main className="main-content">
         <Routes>

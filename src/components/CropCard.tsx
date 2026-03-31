@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Leaf } from 'lucide-react';
+import { Leaf, List } from 'lucide-react';
 import type { Crop } from '../types/crop';
 import { categoryLabels } from '../data/crops';
 
@@ -16,11 +16,15 @@ export default function CropCard({ crop }: Props) {
       </div>
       <div className="crop-card-body">
         <h3 className="crop-card-title">
-          <Leaf size={16} />
+          <Leaf size={18} />
           {crop.name}
         </h3>
         <p className="crop-card-scientific">{crop.scientificName}</p>
         <p className="crop-card-summary">{crop.summary}</p>
+        <div className="crop-card-footer">
+          <List size={14} />
+          <span>共 {crop.stages.length} 个生长阶段</span>
+        </div>
       </div>
     </Link>
   );
