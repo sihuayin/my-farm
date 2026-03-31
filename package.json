@@ -3,7 +3,6 @@
   "private": true,
   "homepage": "https://sihuayin.github.io/my-farm",
   "type": "module",
-  "packageManager": "yarn@4.12.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
