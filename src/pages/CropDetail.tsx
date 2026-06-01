@@ -2,15 +2,28 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Lightbulb } from 'lucide-react';
 import { crops, categoryLabels } from '../data/crops';
+import BeginnerRiskTips from '../components/BeginnerRiskTips';
+import DetailSectionNav from '../components/DetailSectionNav';
 import GrowthTimeline from '../components/GrowthTimeline';
 import CareGuide from '../components/CareGuide';
 import HabitInfo from '../components/HabitInfo';
 import ImageModal from '../components/ImageModal';
 import CropComments from '../components/CropComments';
+import PestDiseaseGuide from '../components/PestDiseaseGuide';
+import PlantingCalendar from '../components/PlantingCalendar';
+import PlantingPlanControl from '../components/PlantingPlanControl';
+import StageActionChecklist from '../components/StageActionChecklist';
+import TodayTasks from '../components/TodayTasks';
+import { cropBeginnerRisks } from '../data/cropBeginnerRisks';
+import { cropProblems } from '../data/cropProblems';
+import { cropPlanning } from '../data/cropPlanning';
 
 export default function CropDetail() {
   const { id } = useParams();
   const crop = crops.find((c) => c.id === id);
+  const planning = id ? cropPlanning[id] : undefined;
+  const problems = id ? cropProblems[id] || [] : [];
+  const risks = id ? cropBeginnerRisks[id] || [] : [];
   const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
 
   if (!crop) {
@@ -55,8 +68,15 @@ export default function CropDetail() {
       </div>
 
       <div className="crop-body">
+        <DetailSectionNav />
+        <PlantingPlanControl cropId={crop.id} cropName={crop.name} planning={planning} />
+        <TodayTasks cropId={crop.id} stages={crop.stages} />
+        {planning && <PlantingCalendar planning={planning} />}
+        <BeginnerRiskTips risks={risks} />
+        <StageActionChecklist cropId={crop.id} stages={crop.stages} />
         <HabitInfo habits={crop.habits} />
         <CareGuide care={crop.care} />
+        <PestDiseaseGuide problems={problems} />
         <GrowthTimeline stages={crop.stages} onImageClick={handleImageClick} />
 
         {crop.tips.length > 0 && (

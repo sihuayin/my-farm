@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
-import { Leaf, List } from 'lucide-react';
+import { CalendarDays, Leaf, List, Timer } from 'lucide-react';
 import type { Crop } from '../types/crop';
 import { categoryLabels } from '../data/crops';
+import { cropPlanning, difficultyLabels, monthLabels } from '../data/cropPlanning';
 
 interface Props {
   crop: Crop;
 }
 
 export default function CropCard({ crop }: Props) {
+  const planning = cropPlanning[crop.id];
+
   return (
     <Link to={`/crop/${crop.id}`} className="crop-card">
       <div className="crop-card-image">
@@ -21,6 +24,19 @@ export default function CropCard({ crop }: Props) {
         </h3>
         <p className="crop-card-scientific">{crop.scientificName}</p>
         <p className="crop-card-summary">{crop.summary}</p>
+        {planning && (
+          <div className="crop-card-planning">
+            <span>
+              <CalendarDays size={14} />
+              {planning.months.map((month) => monthLabels[month - 1]).join('、')}
+            </span>
+            <span>
+              <Timer size={14} />
+              {planning.harvestDays}
+            </span>
+            <span>{difficultyLabels[planning.difficulty]}</span>
+          </div>
+        )}
         <div className="crop-card-footer">
           <List size={14} />
           <span>共 {crop.stages.length} 个生长阶段</span>
