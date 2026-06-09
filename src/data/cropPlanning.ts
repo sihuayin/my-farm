@@ -262,6 +262,18 @@ export const cropPlanning: Record<string, CropPlanningInfo> = {
     containerDepth: '18cm以上',
     waterRhythm: '盆土表面干后浇透',
   },
+  'asparagus-fern': {
+    months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    regions: ['north', 'east', 'south', 'southwest', 'northeast'],
+    spaces: ['balcony'],
+    difficulty: 'easy',
+    sunlight: ['low', 'medium'],
+    harvestDays: '长期观叶，7–14天缓苗',
+    sowingDepth: '按原土痕上盆，根颈略高于土面',
+    spacing: '单盆栽培或株距20–30cm',
+    containerDepth: '15–20cm以上，底部有排水孔',
+    waterRhythm: '表土干后浇透，冬季少水',
+  },
 };
 
 export function getCropRecommendations(

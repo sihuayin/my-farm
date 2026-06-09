@@ -383,4 +383,27 @@ export const cropProblems: Record<string, CropProblem[]> = {
       prevention: '全日照养护，花前补充磷钾肥。',
     },
   ],
+  'asparagus-fern': [
+    {
+      type: 'care',
+      name: '黄叶焦尖',
+      symptoms: '叶状枝发黄、枝尖干枯，严重时整枝变褐脱落。',
+      response: '先移到明亮散射光处，剪除枯黄枝，检查盆土干湿并恢复稳定浇水。',
+      prevention: '避开夏季直射暴晒和空调风口，空气干燥时在周围增湿。',
+    },
+    {
+      type: 'disease',
+      name: '根腐',
+      symptoms: '盆土长期潮湿发闷，植株萎蔫黄叶，脱盆可见根系发黑腐烂。',
+      response: '停止浇水，剪除烂根后换入疏松新土，严重植株需分株保留健康部分。',
+      prevention: '使用有排水孔的花盆，表土干后再浇透，不让托盘长期存水。',
+    },
+    {
+      type: 'pest',
+      name: '介壳虫和红蜘蛛',
+      symptoms: '枝叶间出现小褐壳或细小虫点，叶片失绿发黄，干燥环境更常见。',
+      response: '少量可用湿布或棉签擦除，严重时隔离植株并使用对症药剂。',
+      prevention: '保持通风，定期检查枝叶内侧，避免长期高温干燥。',
+    },
+  ],
 };

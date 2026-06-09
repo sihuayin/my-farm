@@ -14,6 +14,7 @@ import PlantingCalendar from '../components/PlantingCalendar';
 import PlantingPlanControl from '../components/PlantingPlanControl';
 import StageActionChecklist from '../components/StageActionChecklist';
 import TodayTasks from '../components/TodayTasks';
+import TomatoVisualizationEntry from '../components/TomatoVisualizationEntry';
 import { cropBeginnerRisks } from '../data/cropBeginnerRisks';
 import { cropProblems } from '../data/cropProblems';
 import { cropPlanning } from '../data/cropPlanning';
@@ -69,6 +70,7 @@ export default function CropDetail() {
 
       <div className="crop-body">
         <DetailSectionNav />
+        {crop.id === 'tomato' && <TomatoVisualizationEntry />}
         <PlantingPlanControl cropId={crop.id} cropName={crop.name} planning={planning} />
         <TodayTasks cropId={crop.id} stages={crop.stages} />
         {planning && <PlantingCalendar planning={planning} />}

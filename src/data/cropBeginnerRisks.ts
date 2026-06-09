@@ -85,4 +85,9 @@ export const cropBeginnerRisks: Record<string, BeginnerRisk[]> = {
     { title: '残花不剪', mistake: '花期变短，植株消耗养分。', fix: '花朵萎蔫后及时剪掉。' },
     { title: '氮肥过多', mistake: '只长叶不开花。', fix: '花前减少氮肥，增加磷钾肥。' },
   ],
+  'asparagus-fern': [
+    { title: '放在直射光下', mistake: '叶状枝容易发黄、焦尖，株形很快变稀疏。', fix: '移到明亮散射光处，夏季避开西晒和正午直射。' },
+    { title: '浇水太勤', mistake: '盆土长期湿闷会烂根，表现为越浇越黄。', fix: '等表土干后再浇透，托盘积水及时倒掉。' },
+    { title: '空气太干或风口直吹', mistake: '新枝干尖、老枝发黄脱落。', fix: '远离空调暖气风口，干燥季节用托盘水石或周围喷雾增湿。' },
+  ],
 };

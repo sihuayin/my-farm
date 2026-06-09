@@ -145,4 +145,13 @@ export const cropStageActions: Record<string, Partial<Record<GrowthStage, string
     fruiting: ['花后补肥促复花', '剪除盲枝和病叶'],
     maturity: ['冬季重剪更新枝条', '清理落叶减少黑斑病源'],
   },
+  'asparagus-fern': {
+    seedling: ['选择枝叶翠绿、盆土不发臭的健康苗', '上盆后浇透定根水并放在散射光处'],
+    germination: ['缓苗期不要频繁挪动位置', '盆土表层干后再浇透，避免托盘积水'],
+    seedling_stage: ['新枝抽出时保持空气湿度', '发现干尖先检查是否暴晒或缺水'],
+    growth: ['每1–2周转盆一次保持株形均衡', '从基部剪除黄枝、弱枝和过密枝'],
+    flowering: ['花期保持通风和稳定光照', '不要在开花期突然换盆或大幅修剪'],
+    fruiting: ['有儿童或宠物时及时摘除浆果', '结果后补充少量稀薄肥恢复株势'],
+    maturity: ['春季根系挤满花盆时换盆或分株', '换盆后遮强光并控水缓苗7–14天'],
+  },
 };
